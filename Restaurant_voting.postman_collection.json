@@ -1,0 +1,697 @@
+{
+	"info": {
+		"_postman_id": "bc30139c-5bc5-44fd-9f1e-e2c73e30c8e5",
+		"name": "Restaurant_voting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/rest/profile",
+			"item": [
+				{
+					"name": "text (test Text-method)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/profile/text",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"profile",
+								"text"
+							]
+						},
+						"description": "Method GET: test REST-Controller"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/rest/admin/users",
+			"item": [
+				{
+					"name": "save {user} [id=null], \"restaurant\"=null (!check unique email)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"Admin\",\r\n    \"email\": \"admin077@gmail.com\",\r\n    \"password\": \"admin03pass\",\r\n    \"enabled\": true,\r\n    \"voting\": false,\r\n    \"createVotingTime\": null,\r\n    \"roles\": [\r\n        \"USER\",\r\n        \"ADMIN\"\r\n    ],\r\n    \"restaurants\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"users",
+								""
+							]
+						},
+						"description": "creating new Admin (with \"restaurant\": null)"
+					},
+					"response": []
+				},
+				{
+					"name": "update {user} [id]...",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"User_UPDATE\",\r\n    \"email\": \"user07@gmail.com\",\r\n    \"password\": \"admin03pass\",\r\n    \"enabled\": true,\r\n    \"voting\": false,\r\n    \"createVotingTime\": null,\r\n    \"roles\": [\r\n        \"USER\",\r\n        \"ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/users/100000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"users",
+								"100000"
+							]
+						},
+						"description": "creating new Admin (with \"restaurant\": null)"
+					},
+					"response": []
+				},
+				{
+					"name": "delete {user} [id]",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/users/100001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"users",
+								"100001"
+							]
+						},
+						"description": "delete Admin[id]"
+					},
+					"response": []
+				},
+				{
+					"name": "get {users}",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get {user} [id]",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/users/100001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"users",
+								"100001"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/rest/user/restaurants",
+			"item": [
+				{
+					"name": "save {restaurant}, without \"menu\"",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"Теремок\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/user/restaurants/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"user",
+								"restaurants",
+								""
+							]
+						},
+						"description": "restaurant_id: 100004 - в User нет привязки к данному restaurant_id"
+					},
+					"response": []
+				},
+				{
+					"name": "update {restaurant} [id] is voting_process",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"Теремок-UPDATE_33\",\r\n    \"user\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/user/restaurants/100002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"user",
+								"restaurants",
+								"100002"
+							]
+						},
+						"description": "restaurant_id: 100004 - в User нет привязки к данному restaurant_id"
+					},
+					"response": []
+				},
+				{
+					"name": "get {restaurant} [id]",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/user/restaurants/100002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"user",
+								"restaurants",
+								"100002"
+							]
+						},
+						"description": "useer 100002 is Admin!"
+					},
+					"response": []
+				},
+				{
+					"name": "API get {restaurant}",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/user/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"user",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete {restaurant} [id]",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/user/restaurants/100004",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"user",
+								"restaurants",
+								"100004"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6ea55461-7a8e-4584-b169-04ddfec22aca",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a079e1e3-4c18-4164-b485-da7bb965268b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/rest/admin/menus",
+			"item": [
+				{
+					"name": "API: get all Menus [restaurant_id]",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/menus/100002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"menus",
+								"100002"
+							]
+						},
+						"description": "all restaurant's menus"
+					},
+					"response": []
+				},
+				{
+					"name": "delete {menu} [id]",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/menus/100006",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"menus",
+								"100006"
+							]
+						},
+						"description": "be must in advance created Menu[id]"
+					},
+					"response": []
+				},
+				{
+					"name": "API: create new Menu [restaurant_id] (100002)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"суп ccccccccc томаты-фасоль\",\r\n    \"price\": 300,\r\n    \"restaurant\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/menus/100003",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"menus",
+								"100003"
+							]
+						},
+						"description": "restaurant_id: 100003 или 02"
+					},
+					"response": []
+				},
+				{
+					"name": "API: update Menu [id]",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"суп-UPDATE\",\r\n    \"price\": 1,\r\n    \"restaurant\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurant_voting/rest/admin/menus/100004",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurant_voting",
+								"rest",
+								"admin",
+								"menus",
+								"100004"
+							]
+						},
+						"description": "restaurant_id: 100003 или 02"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
