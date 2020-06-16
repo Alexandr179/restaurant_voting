@@ -4,12 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import ru.restaurant_voting.HasId;
-import ru.restaurant_voting.Profiles;
 import ru.restaurant_voting.model.AbstractBaseEntity;
 import ru.restaurant_voting.model.User;
 import ru.restaurant_voting.repository.UserRepository;
@@ -34,11 +32,11 @@ public abstract class AbstractUserController {
     private boolean modificationRestriction;
 
 
-    @Autowired
-    @SuppressWarnings("deprecation")
-    public void setEnvironment(Environment environment) {
-        modificationRestriction = environment.acceptsProfiles(Profiles.POSTGRES_DB);// профиль !!!!!
-    }
+//    @Autowired
+//    @SuppressWarnings("deprecation")
+//    public void setEnvironment(Environment environment) {
+//        modificationRestriction = environment.acceptsProfiles(Profiles.POSTGRES_DB);// профиль !!!!!
+//    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
