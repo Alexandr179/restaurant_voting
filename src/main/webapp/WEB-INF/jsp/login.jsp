@@ -5,10 +5,7 @@
 
 <html>
 <h4>       Authorize with CURL or POSTMAN     </h4>
-<jsp:include page="fragments/headTag.jsp"/>
 <body>
-    <jsp:include page="fragments/bodyHeader.jsp"/>
-
     <br>
     <hr style="margin-left: 20px">
     <p>Design and implementation a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.<br>
@@ -42,6 +39,5 @@
             </sec:authorize>
         </div>
     </div>
-    <jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
