@@ -25,8 +25,8 @@
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
     <!--no pooling-->
-    <!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource" <-default -->
-    <!-- ..tomcat.jdbc.pool.DataSource + dependency in POM - tomcat poll-connect's with <scope>provided</scope> -->
+    <!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource" is default -->
+    <!-- tomcat poll-connect's with <scope>provided</scope> dependency in POM -->
     <bean id="dataSource"
           class="org.apache.tomcat.jdbc.pool.DataSource"
           p:driverClassName="org.hsqldb.jdbcDriver"
@@ -39,12 +39,7 @@
         <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
     </bean>
 
-
-    <!-- tomcat -->
-<!--    <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/restaurant_voting"/>-->
-    <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
-
-    <!--jpa,datajpa-->
+    <!--jpa or datajpa-->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="ru.restaurant_voting.**.model">
