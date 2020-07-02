@@ -28,6 +28,6 @@ public class ProfileRestController extends AbstractUserController {
 
     @GetMapping(value = "/text")
     public String testUTF() {
-        return "Test:   .../restaurant_voting/rest/profile/text - is OK. Работает UTF-8";
+        return "Test ProfileRestController: .../restaurant_voting/rest/profile/text is OK. UTF-8";
     }
 }

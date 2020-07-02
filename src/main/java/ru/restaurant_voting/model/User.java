@@ -40,16 +40,6 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     private boolean enabled = true;
 
 
-    @Column(name = "restaurant_id_voting", nullable = false, columnDefinition = "bool default 0")
-    private Integer restaurantIdVoting;
-
-
-    @Column(name = "createVotingTime", nullable = false, columnDefinition = "timestamp default now()")
-    @NotNull
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date createVotingTime = new Date();
-
-
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -71,20 +61,18 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     }
 
     public User(User u) {// from Test's
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getrestaurantIdVoting(), u.getCreateVotingTime(), u.getRoles());
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRoles());
     }
 
-    public User(Integer id, String name, String email, String password, Integer restaurantIdVoting, Role role, Role... roles) {
-        this(id, name, email, password,true, restaurantIdVoting, new Date(), EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, true, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, Integer restaurantIdVoting, Date createVotingTime, Collection<Role> roles) {
+    public User(Integer id, String name, String email, String password, boolean enabled, Collection<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.enabled = enabled;
-        this.restaurantIdVoting = restaurantIdVoting;
-        this.createVotingTime = createVotingTime;
         setRoles(roles);
     }
 
@@ -101,32 +89,8 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
         this.password = password;
     }
 
-    public Date getCreateVotingTime() {
-        return createVotingTime;
-    }
-
-    public void setCreateVotingTime(Date createVotingTime) {
-        this.createVotingTime = createVotingTime;
-    }
-
-    public Integer getrestaurantIdVoting() {
-        return restaurantIdVoting;
-    }
-
-    public void setrestaurantIdVoting(int restaurantIdVoting) {
-        this.restaurantIdVoting = restaurantIdVoting;
-    }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
     }
 
     public Set<Role> getRoles() {
@@ -141,6 +105,14 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public List<Restaurant> getRestaurants() {
         return restaurants;
     }
@@ -152,7 +124,6 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", createVotingTime=" + createVotingTime +
                 ", roles=" + roles +
                 ", name='" + name + '\'' +
                 ", id=" + id +
