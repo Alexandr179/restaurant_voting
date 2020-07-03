@@ -53,7 +53,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("name DESC")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Restaurant> restaurants;
 
 

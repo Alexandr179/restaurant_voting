@@ -23,7 +23,7 @@ public class Restaurant extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("name DESC")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Menu> menus;
 
 
