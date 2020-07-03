@@ -25,29 +25,29 @@ public class DateTimeUtil {
        this.restaurantRepository = restaurantRepository;
     }
 
-    public void checkVoting(Date currentDate, int id){
-        if(getCreateVotingTime(id).getDate() == currentDate.getDate() &
-                currentDate.getHours() > CONTROL_TIME.getHour() &&
-                currentDate.getMinutes() > CONTROL_TIME.getMinute()){
-            restaurantRepository.get(id).getUser().setrestaurantIdVoting(0);
-        } else {
-            return;// current Time is more CONTROL_TIME
-        }
-        restaurantRepository.get(id).getUser().setrestaurantIdVoting(id);
-        setNewCreateVotingTime(id);
-    }
-
-    public Date getCreateVotingTime(int restaurant_id){
-        return restaurantRepository.get(restaurant_id).getUser().getCreateVotingTime();
-    }
-
-    public boolean hasUserRole(int restaurant_id){// create if not use Security
-        return restaurantRepository.get(restaurant_id).getUser().getRoles().contains(Role.USER);
-    }
-
-    public void setNewCreateVotingTime(int restaurant_id){
-        restaurantRepository.get(restaurant_id).getUser().setCreateVotingTime(new Date());
-    }
+//    public void checkVoting(Date currentDate, int id){
+//        if(getCreateVotingTime(id).getDate() == currentDate.getDate() &
+//                currentDate.getHours() > CONTROL_TIME.getHour() &&
+//                currentDate.getMinutes() > CONTROL_TIME.getMinute()){
+//            restaurantRepository.get(id).getUser().setrestaurantIdVoting(0);
+//        } else {
+//            return;// current Time is more CONTROL_TIME
+//        }
+//        restaurantRepository.get(id).getUser().setrestaurantIdVoting(id);
+//        setNewCreateVotingTime(id);
+//    }
+//
+//    public Date getCreateVotingTime(int restaurant_id){
+//        return restaurantRepository.get(restaurant_id).getUser().getCreateVotingTime();
+//    }
+//
+//    public boolean hasUserRole(int restaurant_id){// create if not use Security
+//        return restaurantRepository.get(restaurant_id).getUser().getRoles().contains(Role.USER);
+//    }
+//
+//    public void setNewCreateVotingTime(int restaurant_id){
+//        restaurantRepository.get(restaurant_id).getUser().setCreateVotingTime(new Date());
+//    }
 
     // ------------------ old Time methods: --------------------
 
