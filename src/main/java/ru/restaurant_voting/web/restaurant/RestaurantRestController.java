@@ -67,7 +67,7 @@ public class RestaurantRestController {
         log.info("update {} for user {}", restaurant, userId);
         Assert.notNull(restaurant, "restaurant must not be null");
         Date newDate = new Date();
-        dateTimeUtil.checkVoting(newDate, id);
+//        dateTimeUtil.checkVoting(newDate, id);
         checkNotFoundWithId(restaurantRepository.save(restaurant, userId), restaurant.id());
     }
 

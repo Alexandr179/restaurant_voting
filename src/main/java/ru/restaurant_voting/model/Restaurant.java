@@ -1,18 +1,10 @@
 package ru.restaurant_voting.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.restaurant_voting.View;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
 @Entity
-@Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "phone", name = "unique_phone_idx")})
+@Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurants_unique_phone_idx")})
 public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "address")
@@ -21,7 +13,7 @@ public class Restaurant extends AbstractNamedEntity {
     @Column(name = "phone", unique = true)
     private String phone;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("name DESC")
 //    @JsonIgnore
     private List<Menu> menus;

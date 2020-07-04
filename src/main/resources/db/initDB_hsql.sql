@@ -1,8 +1,8 @@
 DROP TABLE user_roles IF EXISTS;
-DROP TABLE users IF EXISTS;
-DROP TABLE restaurants IF EXISTS;
-DROP TABLE menus IF EXISTS;
 DROP TABLE reports IF EXISTS;
+DROP TABLE menus IF EXISTS;
+DROP TABLE restaurants IF EXISTS;
+DROP TABLE users IF EXISTS;
 DROP SEQUENCE global_seq IF EXISTS;
 
 CREATE SEQUENCE GLOBAL_SEQ AS INTEGER START WITH 100000;
@@ -34,7 +34,7 @@ CREATE TABLE restaurants
     phone           VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX restaurants_unique_phone_idx ON restaurants (id, name);
+CREATE UNIQUE INDEX restaurants_unique_phone_idx ON restaurants (name);
 
 CREATE TABLE menus
 (
