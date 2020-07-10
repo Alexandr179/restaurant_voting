@@ -57,7 +57,7 @@ public class MenuRestController {
 
 //    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void update(@RequestBody Menu menu, @PathVariable int id) {  //@Validated(View.Web.class)// !! Menu подаем с id=null
+//    public void update(@RequestBody Menu menu, @PathVariable int id) {  // !! Menu подаем с id=null
 //        assureIdConsistent(menu, id);   // устанавливаем id для полученного (из тела JSON) menu
 //        log.info("update menu {} from {}", menu, id);
 //        Assert.notNull(menu, "menu must not be null");
@@ -72,7 +72,7 @@ public class MenuRestController {
 // --------------------- по аналогии , но не работает..
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Menu menu, @PathVariable int id) {//@Validated(View.Web.class)
+    public void update(@RequestBody Menu menu, @PathVariable int id) {
         int restaurantId = menuRepository.get(id).getRestaurant().getId();
         assureIdConsistent(menu, id);
         log.info("update {} for restaurant {}", menu, restaurantId);
@@ -82,7 +82,7 @@ public class MenuRestController {
 
 
     @PostMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Menu> createWithLocation(@RequestBody Menu menu, @PathVariable int restaurantId) {//@Validated(View.Web.class)
+    public ResponseEntity<Menu> createWithLocation(@RequestBody Menu menu, @PathVariable int restaurantId) {
         log.info("create {} for restaurant {}", menu, restaurantId);
         Menu created = menuRepository.save(menu, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

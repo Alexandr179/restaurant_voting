@@ -61,7 +61,7 @@ public class RestaurantRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {//@Validated(View.Web.class)
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(restaurant, id);
         log.info("update {} for user {}", restaurant, userId);
@@ -72,7 +72,7 @@ public class RestaurantRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {//@Validated(View.Web.class)
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
         int userId = SecurityUtil.authUserId();
         checkNew(restaurant);
         log.info("create {} for user {}", restaurant, userId);
