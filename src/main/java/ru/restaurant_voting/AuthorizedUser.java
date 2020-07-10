@@ -13,17 +13,8 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
         this.user = user;
     }
 
-
     public int getId() {
         return user.id();
-    }
-
-    public void update(User newTo) {
-        user = newTo;
-    }
-
-    public User getUserTo() {
-        return user;
     }
 
     @Override
