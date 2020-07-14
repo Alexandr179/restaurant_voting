@@ -33,7 +33,6 @@ public class AdminRestController extends AbstractUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -47,11 +46,10 @@ public class AdminRestController extends AbstractUserController {
         super.delete(id);
     }
 
-
+    @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user, @PathVariable int id) throws BindException {
-        checkAndValidateForUpdate(user, id);
+    public void update(@RequestBody User user, @PathVariable int id) {
         super.update(user, id);
     }
 

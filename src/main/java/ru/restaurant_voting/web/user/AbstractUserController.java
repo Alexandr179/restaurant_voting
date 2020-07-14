@@ -15,33 +15,14 @@ import ru.restaurant_voting.util.exception.ModificationRestrictionException;
 
 import java.util.List;
 
+import static ru.restaurant_voting.util.ValidationUtil.checkNew;
 import static ru.restaurant_voting.util.ValidationUtil.assureIdConsistent;
 
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    // Validate manually cause UniqueMailValidator doesn't work for update with user.id==null
-    private WebDataBinder binder;
-
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UniqueMailValidator emailValidator;
-
-    private boolean modificationRestriction;
-
-
-//    @Autowired
-//    @SuppressWarnings("deprecation")
-//    public void setEnvironment(Environment environment) {
-//        modificationRestriction = environment.acceptsProfiles(Profiles.POSTGRES_DB);// профиль !!!!!
-//    }
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(emailValidator);
-    }
 
     public List<User> getAll() {
         log.info("getAll");
@@ -55,20 +36,17 @@ public abstract class AbstractUserController {
 
     public User create(User user) {
         log.info("create {}", user);
-//        checkNew(user);
         return userRepository.save(user);
     }
 
     public void delete(int id) {
         log.info("delete {}", id);
-//        checkModificationAllowed(id); // -------------------------------- падение, без check.. проходит -------------
         userRepository.delete(id);
     }
 
-    public void update(User user, int id) throws BindException {
+    public void update(User user, int id) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
-//        checkModificationAllowed(id);
         userRepository.save(user);
     }
 
@@ -79,23 +57,6 @@ public abstract class AbstractUserController {
 
     public void enable(int id, boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", id);
-        checkModificationAllowed(id);
         userRepository.enable(id, enabled);
-    }
-
-    private void checkModificationAllowed(int id) {
-        if (modificationRestriction && id < AbstractBaseEntity.START_SEQ + 2) {
-            throw new ModificationRestrictionException();
-        }
-    }
-
-    protected void checkAndValidateForUpdate(HasId user, int id) throws BindException {
-        log.info("update {} with id={}", user, id);
-        assureIdConsistent(user, id);
-//        checkModificationAllowed(id);
-//        binder.validate();
-//        if (binder.getBindingResult().hasErrors()) {
-//            throw new BindException(binder.getBindingResult());
-//        }
     }
 }
