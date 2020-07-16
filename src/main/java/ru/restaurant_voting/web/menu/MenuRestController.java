@@ -11,14 +11,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant_voting.model.Menu;
-import ru.restaurant_voting.model.Restaurant;
 import ru.restaurant_voting.repository.MenuRepository;
 import ru.restaurant_voting.repository.RestaurantRepository;
-import ru.restaurant_voting.web.RestaurantUtil;
-import ru.restaurant_voting.web.SecurityUtil;
 
 import java.net.URI;
-import java.util.Date;
 import java.util.List;
 
 import static ru.restaurant_voting.util.ValidationUtil.assureIdConsistent;

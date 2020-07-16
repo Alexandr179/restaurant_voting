@@ -61,12 +61,7 @@
         <property name="fallbackToSystemLocale" value="false"/>
     </bean>
 
-    <!-- defaultLocale: ...  -->
     <bean class="org.springframework.context.support.MessageSourceAccessor">
         <constructor-arg ref="messageSource"/>
-    </bean>
-
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="defaultLocale" value="ru"/>
     </bean>
 </beans>
