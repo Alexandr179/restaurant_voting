@@ -3,13 +3,11 @@ package ru.restaurant_voting.util.exception;
 public class ErrorInfo {
     private final String url;
     private final ErrorType type;
-    private final String typeMessage;
-    private final String[] details;
+    private final String detail;
 
-    public ErrorInfo(CharSequence url, ErrorType type, String typeMessage, String... details) {
+    public ErrorInfo(CharSequence url, ErrorType type, String detail) {
         this.url = url.toString();
         this.type = type;
-        this.typeMessage = typeMessage;
-        this.details = details;
+        this.detail = detail;
     }
 }

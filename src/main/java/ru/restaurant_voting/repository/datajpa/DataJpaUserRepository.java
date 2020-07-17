@@ -46,9 +46,4 @@ public class DataJpaUserRepository implements UserRepository {
     public User getWithRestaurants(int id) {
         return null;
     }
-
-    @Override
-    public void enable(int id, boolean enabled) {
-
-    }
 }

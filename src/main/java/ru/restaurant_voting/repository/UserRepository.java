@@ -21,6 +21,4 @@ public interface UserRepository {
     default User getWithRestaurants(int id) {
         throw new UnsupportedOperationException();
     }
-
-    void enable(int id, boolean enabled);
 }

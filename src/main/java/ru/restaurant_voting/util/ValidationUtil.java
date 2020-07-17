@@ -1,14 +1,14 @@
 package ru.restaurant_voting.util;
 
-import org.slf4j.Logger;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import ru.restaurant_voting.HasId;
-import ru.restaurant_voting.util.exception.ErrorType;
 import ru.restaurant_voting.util.exception.IllegalRequestDataException;
 import ru.restaurant_voting.util.exception.NotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ValidationUtil {
 
@@ -29,9 +29,9 @@ public class ValidationUtil {
         return object;
     }
 
-    public static void checkNotFound(boolean found, String arg) {
+    public static void checkNotFound(boolean found, String msg) {
         if (!found) {
-            throw new NotFoundException(arg);
+            throw new NotFoundException("Not found entity with " + msg);
         }
     }
 
@@ -61,20 +61,6 @@ public class ValidationUtil {
         return result;
     }
 
-    public static String getMessage(Throwable e) {
-        return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
-    }
-
-    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
-        Throwable rootCause = ValidationUtil.getRootCause(e);
-        if (logException) {
-            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
-        } else {
-            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
-        }
-        return rootCause;
-    }
-
     private static final Validator validator;
 
     static {
@@ -90,5 +76,13 @@ public class ValidationUtil {
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
+    }
+
+    public static ResponseEntity<String> getErrorResponse(BindingResult result) {
+        return ResponseEntity.unprocessableEntity().body(
+                result.getFieldErrors().stream()
+                        .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
+                        .collect(Collectors.joining("<br>"))
+        );
     }
 }

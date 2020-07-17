@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import static ru.restaurant_voting.UserTestData.ADMIN;
 import static ru.restaurant_voting.UserTestData.USER;
 
-
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
@@ -28,12 +27,6 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
         return getCollection().stream()
                 .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
                 .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public void enable(int id, boolean enabled) {
-
     }
 
     @Override
