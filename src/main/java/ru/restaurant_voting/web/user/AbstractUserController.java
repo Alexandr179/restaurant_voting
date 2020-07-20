@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.restaurant_voting.model.User;
 import ru.restaurant_voting.repository.UserRepository;
+import ru.restaurant_voting.service.UserAuthService;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public abstract class AbstractUserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserAuthService userAuthService;
 
     public List<User> getAll() {
         log.info("getAll");
@@ -28,7 +32,7 @@ public abstract class AbstractUserController {
 
     public User create(User user) {
         log.info("create {}", user);
-        return userRepository.save(user);
+        return userAuthService.create(user);// UserAuthService with authorization
     }
 
     public void delete(int id) {
@@ -36,10 +40,10 @@ public abstract class AbstractUserController {
         userRepository.delete(id);
     }
 
-    public void update(User user, int id) {
+    public void update(User user, int id) {// UserAuthService with authorization
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
-        userRepository.save(user);
+        userAuthService.update(user);
     }
 
     public User getByMail(String email) {

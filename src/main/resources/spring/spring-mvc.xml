@@ -42,6 +42,8 @@
             <set>
                 <bean class="ru.restaurant_voting.web.converter.DateTimeFormatters.LocalTimeFormatter"/>
                 <bean class="ru.restaurant_voting.web.converter.DateTimeFormatters.LocalDateFormatter"/>
+
+                <bean class="ru.restaurant_voting.web.converter.MoneyFormatter"/>
             </set>
         </property>
     </bean>

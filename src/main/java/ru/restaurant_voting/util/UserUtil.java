@@ -15,4 +15,9 @@ public class UserUtil {
         user.setEmail(user.getEmail().toLowerCase());
         return user;
     }
+
+    public static User update(User user) {
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
+    }
 }

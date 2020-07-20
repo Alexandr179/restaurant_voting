@@ -19,17 +19,17 @@ public class ProfileRestController extends AbstractUserController {
     static final String REST_URL = "/rest/profile";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public User get(@AuthenticationPrincipal AuthorizedUser authUser) {// login
         return super.get(authUser.getId());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {// logout
         super.delete(authUser.getId());
     }
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)// registration new auth-user
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> register(@RequestBody User user) {
         User created = super.create(user);
@@ -42,10 +42,5 @@ public class ProfileRestController extends AbstractUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @AuthenticationPrincipal AuthorizedUser authUser) {
         super.update(user, authUser.getId());
-    }
-
-    @GetMapping(value = "/text")
-    public String testUTF() {
-        return "Test ProfileRestController: .../restaurant_voting/rest/profile/text is OK. UTF-8";
     }
 }
