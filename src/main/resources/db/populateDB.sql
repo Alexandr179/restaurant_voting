@@ -20,5 +20,5 @@ INSERT INTO restaurants (name, user_id) VALUES
 ('Европа', 100001);
 
 INSERT INTO menus (name, price, restaurant_id) VALUES
-('суп томаты-фасоль', 300, 100002),
-('паста', 400, 100003);
+('суп томаты-фасоль', 100002, 100002),
+('паста', 100003, 100003);

@@ -1,6 +1,7 @@
 package ru.restaurant_voting.model;
 
 //import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.hibernate.Hibernate;
 //import org.springframework.data.domain.Persistable;
 import org.springframework.util.Assert;
@@ -8,10 +9,13 @@ import ru.restaurant_voting.HasId;
 
 import javax.persistence.*;
 
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+
 @MappedSuperclass
 // http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
-@Access(AccessType.FIELD)
-//@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
+@Access(AccessType.FIELD)//   JPA annotation
+//@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE) //JSON annotation
 public abstract class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 100000;
 

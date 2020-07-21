@@ -1,7 +1,6 @@
 package ru.restaurant_voting.model;
 
 import org.javamoney.moneta.Money;
-
 import javax.persistence.*;
 
 
@@ -11,10 +10,10 @@ public class Menu extends AbstractNamedEntity {
 
     @Column(name = "price", nullable = false)
 //    @Range(min = 10, max = 100000)
-    private Money price;
+    private Integer price;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)// without Restaurant.. in entity in JSON response !
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
@@ -22,20 +21,20 @@ public class Menu extends AbstractNamedEntity {
     public Menu() {
     }
 
-    public Menu(String name, Money price) {
+    public Menu(String name, Integer price) {
         this(null, name, price);
     }
 
-    public Menu(Integer id, String name, Money price) {
+    public Menu(Integer id, String name, Integer price) {
         super(id, name);
         this.price = price;
     }
 
-    public Money getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

@@ -7,7 +7,7 @@
     <context:component-scan base-package="ru.restaurant_voting.**.repository"/>
     <context:component-scan base-package="ru.restaurant_voting.**.web.user"/>
     <context:component-scan base-package="ru.restaurant_voting.**.web.restaurant"/>
-    <context:component-scan base-package="ru.restaurant_voting.**.web.menu"/>
+    <context:component-scan base-package="ru.restaurant_voting.**.web.voting"/>
 
     <bean class="org.springframework.security.crypto.password.NoOpPasswordEncoder" id="passwordEncoder"/>
 </beans>

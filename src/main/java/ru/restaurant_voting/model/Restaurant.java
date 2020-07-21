@@ -18,8 +18,7 @@ public class Restaurant extends AbstractNamedEntity {
 //    @JsonIgnore
     private List<Menu> menus;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
