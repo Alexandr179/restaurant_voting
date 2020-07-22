@@ -5,11 +5,11 @@
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http pattern="/resources/**" security="none"/>
-    <http pattern="/webjars/**" security="none"/>
+<!--    <http pattern="/webjars/**" security="none"/>-->
 
     <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
-        <intercept-url pattern="/rest/user/**" access="hasRole('USER')"/>
+        <intercept-url pattern="/rest/admin/users/voting/**" access="hasRole('USER')"/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
@@ -23,6 +23,8 @@
         <intercept-url pattern="/profile/register" access="isAnonymous()"/>
 
         <intercept-url pattern="/**/admin/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/**/users/**" access="hasRole('USER')"/>
+
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
         <form-login login-page="/login" default-target-url="/index"

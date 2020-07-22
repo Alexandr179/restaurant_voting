@@ -1,23 +1,14 @@
 package ru.restaurant_voting.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.util.CollectionUtils;
-import ru.restaurant_voting.HasIdAndEmail;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
 @Table(name = "reports")
-public class Reports extends AbstractBaseEntity {
+public class Report extends AbstractBaseEntity {
 
     @Column(name = "user_id", nullable = false, columnDefinition = "bool default 0")
     private Integer userId;
@@ -33,15 +24,15 @@ public class Reports extends AbstractBaseEntity {
     private Integer restaurantId;
 
 
-    public Reports() {
+    public Report() {
     }
 
 
-    public Reports(Reports r) {// from Test's
+    public Report(Report r) {// from Test's
         this(r.id, r.userId, new Date(), r.restaurantId);
     }
 
-    public Reports(Integer id, Integer userId, @NotNull Date createVotingTime, Integer restaurantId) {
+    public Report(Integer id, Integer userId, @NotNull Date createVotingTime, Integer restaurantId) {
         super(id);
         this.userId = userId;
         this.createVotingTime = createVotingTime;
@@ -70,7 +61,7 @@ public class Reports extends AbstractBaseEntity {
 
     @Override
     public String toString() {
-        return "Reports{" +
+        return "Report{" +
                 "userId=" + userId +
                 ", createVotingTime=" + createVotingTime +
                 ", restaurantId=" + restaurantId +
