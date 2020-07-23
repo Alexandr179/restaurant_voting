@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.restaurant_voting.model.Menu;
 import ru.restaurant_voting.model.Report;
-import ru.restaurant_voting.model.Restaurant;
 import ru.restaurant_voting.repository.ReportRepository;
+import ru.restaurant_voting.util.DateTimeUtil;
 import ru.restaurant_voting.web.SecurityUtil;
 
 import java.net.URI;
@@ -27,7 +27,11 @@ public class VotingRestController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ReportRepository reportRepository;
+    private final ReportRepository reportRepository;
+
+    public VotingRestController(ReportRepository reportRepository) {
+        this.reportRepository = reportRepository;
+    }
 
     @GetMapping
     public List<Report> getReportRestaurantsByAuthUser() {
@@ -44,31 +48,44 @@ public class VotingRestController {
 
     @DeleteMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete() {
+    public boolean deleteUserReport() {
         int userId = SecurityUtil.authUserId();
-        reportRepository.delete(userId);
+        return reportRepository.deleteByUserId(userId);
     }
 
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    public void update(@RequestBody Menu menu, @PathVariable int id) {
-//        int restaurantId = menuRepository.get(id).getRestaurant().getId();
-//        assureIdConsistent(menu, id);
-//        log.info("update {} for restaurant {}", menu, restaurantId);
-//        Assert.notNull(menu, "restaurant must not be null");
-//        checkNotFoundWithId(menuRepository.save(menu, restaurantId), menu.id());
-//    }
+    @PutMapping(value = "/{id}/restaurants/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updateReport(@RequestBody Report report, @PathVariable int restaurantId, @PathVariable int id) {
+        assureIdConsistent(report, id);
+        log.info("update voting {} for restaurant {}", id, restaurantId);
+        report.setRestaurantLink(restaurantId);
+        report.setUserLink(SecurityUtil.authUserId());
+        Assert.notNull(report, "restaurant must not be null");
+        checkNotFoundWithId(reportRepository.save(report), report.id());
+    }
 
-    @PostMapping(value = "/{restaurantId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Report> createWithLocation(@PathVariable int restaurantId) {
+    @PostMapping(value = "/restaurants/{restaurantId}")// without requestBody -> //, consumes = MediaType.APPLICATION_JSON_VALUE
+    public ResponseEntity<Report> createReportWithLocation(@PathVariable int restaurantId) {
         log.info("create voting report for restaurant {}", restaurantId);
+        int authUserId = SecurityUtil.authUserId();
         Report report = new Report();
-        report.setRestaurantId(restaurantId);
-        report.setUserId(SecurityUtil.authUserId());
-        Report created = reportRepository.save(report);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+
+        if(DateTimeUtil.isVotingTodayReportBy(restaurantId)){// repeat-voting today
+            Report created = reportRepository.getByRestaurantId(restaurantId).get();
+
+            if(DateTimeUtil.isVotingBeforeControlTimeBy(restaurantId)){// voting is before CONTROL_TIME (11.00)
+                reportRepository.deleteByRestaurantId(restaurantId);;// user rethinks.. and drop his voting-report
+            }
+            return new ResponseEntity<>(HttpStatus.OK);// no changes-status
+        } else {//                                        new voting, isn't voting today
+            report.setRestaurantLink(restaurantId);
+            report.setUserLink(authUserId);
+            Report created = reportRepository.save(report);
+
+            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{id}")
+                    .buildAndExpand(created.getId()).toUri();
+            return ResponseEntity.created(uriOfNewResource).body(created);
+        }
     }
 }

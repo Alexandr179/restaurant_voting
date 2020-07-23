@@ -6,19 +6,15 @@ import ru.restaurant_voting.model.Report;
 import ru.restaurant_voting.repository.ReportRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public class DataJpaReportRepository implements ReportRepository {
 
-    private final CrudRestaurantRepository crudRestaurantRepository;
-    private final CrudMenuRepository crudMenuRepository;
     private final CrudReportRepository crudReportRepository;
 
-
-    public DataJpaReportRepository(CrudRestaurantRepository crudRestaurantRepository, CrudMenuRepository crudMenuRepository, CrudReportRepository crudReportRepository) {
-        this.crudRestaurantRepository = crudRestaurantRepository;
-        this.crudMenuRepository = crudMenuRepository;
+    public DataJpaReportRepository(CrudReportRepository crudReportRepository) {
         this.crudReportRepository = crudReportRepository;
     }
 
@@ -32,16 +28,42 @@ public class DataJpaReportRepository implements ReportRepository {
     }
 
     @Override
-    public boolean delete(int userId) {
-        return crudReportRepository.deleteReportsByUserId(userId) != 0;
+    public boolean deleteByUserId(int userId) {
+        return crudReportRepository.deleteReportsByUserLink(userId) != 0;
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        return crudReportRepository.deleteReportsById(id) != 0;
+    }
+
+    public boolean deleteByRestaurantId(int restaurantId){
+        return crudReportRepository.deleteReportByRestaurantLink(restaurantId) != 0;
     }
 
     @Override
     public List<Report> getAllByUserId(int userId) {
-        return crudReportRepository.getAllByUserId(userId);
+        return crudReportRepository.getAllByUserLink(userId);
     }
 
+    @Override
+    public Optional<Report> getByRestaurantId(int restaurantId) {
+        return crudReportRepository.getFirstByRestaurantLink(restaurantId);
+    }
+
+
+    @Override
     public List<Report> getAllByRestaurantId(int restaurantId) {
-        return crudReportRepository.getAllByRestaurantId(restaurantId);
+        return crudReportRepository.getAllByRestaurantLink(restaurantId);
+    }
+
+//    @Override
+//    public List<Report> getReportTodayBy(int authUserId, int restaurantId, int day){
+//        return crudReportRepository.getReportByUserIdAndRestaurantIdAndDateTime_Day(authUserId, restaurantId, day);
+//    }
+
+    @Override
+    public Report getById(Integer id) {
+        return crudReportRepository.getOne(id);
     }
 }

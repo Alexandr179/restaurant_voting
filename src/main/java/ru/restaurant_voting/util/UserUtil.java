@@ -7,8 +7,7 @@ import ru.restaurant_voting.model.User;
 
 public class UserUtil {
 
-    //  passwordEncoding..
-
+    //  passwordEncoding
     public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
         String password = user.getPassword();
         user.setPassword(StringUtils.hasText(password) ? passwordEncoder.encode(password) : password);

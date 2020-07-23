@@ -10,61 +10,65 @@ import java.util.*;
 @Table(name = "reports")
 public class Report extends AbstractBaseEntity {
 
-    @Column(name = "user_id", nullable = false, columnDefinition = "bool default 0")
-    private Integer userId;
+    @Column(name = "user_link", nullable = false, columnDefinition = "bool default 0")
+    private Integer userLink;
 
 
-    @Column(name = "voting_time", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date createVotingTime = new Date();
+    private Date dateTime = new Date();//                        LocalDateTime -caused error
 
 
-    @Column(name = "restaurant_id", nullable = false, columnDefinition = "bool default 0")
-    private Integer restaurantId;
+    @Column(name = "restaurant_link", nullable = false, columnDefinition = "bool default 0")
+    private Integer restaurantLink;
 
 
     public Report() {
     }
 
 
-    public Report(Report r) {// from Test's
-        this(r.id, r.userId, new Date(), r.restaurantId);
+    public Report(Integer id, Integer userLink, Integer restaurantLink) {
+        this(id, userLink, new Date(), restaurantLink);
     }
 
-    public Report(Integer id, Integer userId, @NotNull Date createVotingTime, Integer restaurantId) {
+    public Report(Integer id, Integer userLink, Date dateTime, Integer restaurantLink) {
         super(id);
-        this.userId = userId;
-        this.createVotingTime = createVotingTime;
-        this.restaurantId = restaurantId;
+        this.userLink = userLink;
+        this.dateTime = dateTime;
+        this.restaurantLink = restaurantLink;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUserLink() {
+        return userLink;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserLink(Integer userId) {
+        this.userLink = userId;
     }
 
-    public Date getCreateVotingTime() {
-        return createVotingTime;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public Integer getRestaurantId() {
-        return restaurantId;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
+    public Integer getRestaurantLink() {
+        return restaurantLink;
+    }
+
+    public void setRestaurantLink(Integer restaurantId) {
+        this.restaurantLink = restaurantId;
     }
 
     @Override
     public String toString() {
         return "Report{" +
-                "userId=" + userId +
-                ", createVotingTime=" + createVotingTime +
-                ", restaurantId=" + restaurantId +
+                "userLink=" + userLink +
+                ", dateTime=" + dateTime +
+                ", restaurantLink=" + restaurantLink +
                 ", id=" + id +
                 '}';
     }
