@@ -14,6 +14,7 @@ import ru.restaurant_voting.repository.UserRepository;
 import ru.restaurant_voting.util.UserUtil;
 
 import static ru.restaurant_voting.util.UserUtil.prepareToSave;
+import static ru.restaurant_voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -48,5 +49,9 @@ public class UserAuthService implements UserDetailsService {
 
     private User prepareAndSave(User user) {
         return repository.save(prepareToSave(user, passwordEncoder));
+    }
+
+    public User get(int id) {
+        return checkNotFoundWithId(repository.get(id), id);
     }
 }
