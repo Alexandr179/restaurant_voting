@@ -4,12 +4,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
-<h4>       Authorize with CURL or POSTMAN     </h4>
+<h4> Authorize with CURL or POSTMAN authorization </h4>
 <body>
     <br>
     <hr style="margin-left: 20px">
-    <p>Design and implementation a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.<br>
-        Tests with: <hr color="blue">restaurant_voting.postman_collection.json file.</hr>></p>
+    <p>Task: Design and implementation a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.<br>
+        Test it with: <hr color="blue">restaurant_voting.postman_collection.json file.</hr>></p>
 
     <img src=""><img src="resources/images/UML Restaurant_voting.png">
 
