@@ -7,7 +7,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.annotations.Ignore;
 import ru.restaurant_voting.UserTestData;
 import ru.restaurant_voting.model.Role;
 import ru.restaurant_voting.model.User;

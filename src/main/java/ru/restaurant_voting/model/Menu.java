@@ -1,6 +1,6 @@
 package ru.restaurant_voting.model;
 
-import org.javamoney.moneta.Money;
+//import org.javamoney.moneta.Money;
 import javax.persistence.*;
 
 
