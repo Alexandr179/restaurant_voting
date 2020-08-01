@@ -12,6 +12,7 @@
     <url>http://restaurant_voting.herokuapp.com/</url>
 
     <properties>
+        <!-- 11 (1.8 only for Heroku deploy) -->
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -73,50 +74,74 @@
                 </configuration>
             </plugin>
 
-                <!-- http://stackoverflow.com/questions/4305935/is-it-possible-to-supply-tomcat6s-context-xml-file-via-the-maven-cargo-plugin#4417945 -->
-                <!-- https://codehaus-cargo.github.io/cargo/Tomcat+9.x.html -->
-                <plugin>
-                    <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.7.10</version>
+            <!-- http://stackoverflow.com/questions/4305935/is-it-possible-to-supply-tomcat6s-context-xml-file-via-the-maven-cargo-plugin#4417945 -->
+            <!-- https://codehaus-cargo.github.io/cargo/Tomcat+9.x.html -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.10</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <systemProperties>
+                            <file.encoding>UTF-8</file.encoding>
+                        </systemProperties>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
                     <configuration>
-                        <container>
-                            <containerId>tomcat9x</containerId>
-                            <systemProperties>
-                                <file.encoding>UTF-8</file.encoding>
-                                <spring.profiles.active>tomcat,datajpa</spring.profiles.active>
-                            </systemProperties>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>org.postgresql</groupId>
-                                    <artifactId>postgresql</artifactId>
-                                </dependency>
-                            </dependencies>
-                        </container>
-                        <configuration>
-                            <configfiles>
-                                <configfile>
-                                    <file>src/main/resources/tomcat/context.xml</file>
-                                    <todir>conf/Catalina/localhost/</todir>
-                                    <tofile>${project.build.finalName}.xml</tofile>
-                                </configfile>
-                            </configfiles>
-                        </configuration>
-                        <deployables>
-                            <deployable>
-                                <groupId>ru.restaurant_voting</groupId>
-                                <artifactId>restaurant_voting</artifactId>
-                                <type>war</type>
-                                <properties>
-                                    <context>${project.build.finalName}</context>
-                                </properties>
-                            </deployable>
-                        </deployables>
+                        <configfiles>
+                            <configfile>
+                                <file>src/main/resources/tomcat/context.xml</file>
+                                <todir>conf/Catalina/localhost/</todir>
+                                <tofile>${project.build.finalName}.xml</tofile>
+                            </configfile>
+                        </configfiles>
                     </configuration>
-                </plugin>
+                    <deployables>
+                        <deployable>
+                            <groupId>ru.restaurant_voting</groupId>
+                            <artifactId>restaurant_voting</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
+
+            <!-- com.heroku plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <!--https://github.com/jsimone/webapp-runner#using-without-memcached-or-redis-->
+                                <artifactItem>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner-main</artifactId>
+                                    <version>9.0.31.0</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 
 
     <dependencies>
@@ -291,26 +316,6 @@
             <version>3.15.0</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Money -->
-<!--        <dependency>-->
-<!--            <groupId>javax.money</groupId>-->
-<!--            <artifactId>money-api</artifactId>-->
-<!--            <version>1.0.3</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.javamoney</groupId>-->
-<!--            <artifactId>moneta</artifactId>-->
-<!--            <version>1.2.1</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.testng</groupId>-->
-<!--            <artifactId>testng</artifactId>-->
-<!--            <version>7.1.0</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <dependencyManagement>

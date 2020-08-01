@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static ru.restaurant_voting.web.json.JacksonObjectMapper.getMapper;
 
@@ -38,6 +40,7 @@ public class JsonUtil {
     }
 
     public static <T> String writeAdditionProps(T obj, String addName, Object addValue) {
+
         return writeAdditionProps(obj, Map.of(addName, addValue));
     }
 
